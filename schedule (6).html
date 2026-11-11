@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>مواعيدي</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f3f5fb;--b1:rgba(99,102,241,.25);--b2:rgba(236,72,153,.18);--b3:rgba(20,184,166,.20);--card:rgba(255,255,255,.78);--edge:rgba(255,255,255,.95);--text:#141a33;--muted:#667089;--line:rgba(20,26,51,.10);--input:rgba(255,255,255,.95);--accent:#6366f1;--danger:#e11d48;--shadow:0 12px 36px rgba(40,50,110,.10);
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:light dark}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0b0e1a;--b1:rgba(99,102,241,.28);--b2:rgba(236,72,153,.14);--b3:rgba(20,184,166,.14);--card:rgba(24,29,52,.70);--edge:rgba(255,255,255,.08);--text:#eef0fb;--muted:#9aa3c4;--line:rgba(255,255,255,.10);--input:rgba(255,255,255,.07);--accent:#818cf8;--danger:#fb7185;--shadow:0 12px 36px rgba(0,0,0,.45)}}
+:root[data-theme="dark"]{--bg:#0b0e1a;--b1:rgba(99,102,241,.28);--b2:rgba(236,72,153,.14);--b3:rgba(20,184,166,.14);--card:rgba(24,29,52,.70);--edge:rgba(255,255,255,.08);--text:#eef0fb;--muted:#9aa3c4;--line:rgba(255,255,255,.10);--input:rgba(255,255,255,.07);--accent:#818cf8;--danger:#fb7185;--shadow:0 12px 36px rgba(0,0,0,.45)}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;color:var(--text);font-family:"Cairo","Segoe UI",Tahoma,Arial,sans-serif;line-height:1.55;background:radial-gradient(700px 480px at 95% -5%,var(--b1),transparent 70%),radial-gradient(600px 500px at -5% 45%,var(--b2),transparent 70%),radial-gradient(700px 500px at 85% 105%,var(--b3),transparent 70%),var(--bg);background-attachment:fixed}
+main{max-width:1120px;margin:0 auto;padding:20px 16px 50px}
+.glass{background:var(--card);border:1px solid var(--edge);box-shadow:var(--shadow);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
+.hero{border-radius:26px;padding:22px;display:grid;grid-template-columns:1fr auto;gap:16px;align-items:center;margin-bottom:18px}
+.hero h1{margin:0;font-size:clamp(1.5rem,4vw,2.2rem);font-weight:900;letter-spacing:-.5px}
+.hero h1 span{background:linear-gradient(90deg,#6366f1,#ec4899);-webkit-background-clip:text;background-clip:text;color:transparent}
+.clock{font-size:2.2rem;font-weight:900;font-variant-numeric:tabular-nums;text-align:left;direction:ltr;line-height:1}
+.clock small{display:block;font-size:.8rem;font-weight:600;color:var(--muted);margin-top:4px;direction:rtl;text-align:left}
+.next{grid-column:1/-1;display:flex;align-items:center;gap:10px;background:var(--input);border:1px solid var(--line);border-radius:16px;padding:10px 14px;font-weight:600}
+.pulse{width:10px;height:10px;border-radius:50%;background:#22c55e;box-shadow:0 0 0 0 rgba(34,197,94,.6);animation:p 1.8s infinite;flex:none}
+@keyframes p{70%{box-shadow:0 0 0 10px rgba(34,197,94,0)}100%{box-shadow:0 0 0 0 rgba(34,197,94,0)}}
+.bar{grid-column:1/-1;height:8px;border-radius:99px;background:var(--line);overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,#6366f1,#ec4899);border-radius:99px;transition:width .6s}
+.tools{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:16px}
+.stats{display:flex;gap:8px;flex-wrap:wrap;flex:1}
+.stat{border-radius:99px;padding:6px 14px;font-size:.88rem;font-weight:700}
+.lock{display:flex;align-items:center;gap:8px;font:inherit;font-weight:800;cursor:pointer;padding:10px 20px;border-radius:99px;border:1px solid var(--line);background:var(--card);color:var(--text);transition:.2s}
+.lock.on{background:linear-gradient(90deg,#6366f1,#ec4899);color:#fff;border-color:transparent}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px}
+.day{--c:var(--accent);position:relative;border-radius:22px;padding:16px;display:flex;flex-direction:column;gap:10px;overflow:hidden;transition:transform .25s}
+.day:hover{transform:translateY(-3px)}
+.day::before{content:"";position:absolute;top:-40px;inset-inline-end:-40px;width:120px;height:120px;border-radius:50%;background:var(--c);opacity:.16}
+.day.today{box-shadow:0 0 0 2px var(--c),var(--shadow)}
+.dh{display:flex;align-items:center;justify-content:space-between;position:relative}
+.dh h2{margin:0;font-size:1.3rem;font-weight:900}
+.dh span{font-size:.75rem;font-weight:700;background:var(--c);color:#fff;padding:2px 11px;border-radius:99px}
+.ev{position:relative;display:flex;align-items:center;gap:10px;background:var(--input);border:1px solid var(--line);border-radius:14px;padding:10px;animation:in .3s both}
+@keyframes in{from{opacity:0;transform:translateY(8px)}}
+.ev.live{border-color:#22c55e;box-shadow:0 0 0 2px rgba(34,197,94,.25)}
+.ev.warn{border-color:#f59e0b}
+.cat{width:40px;height:40px;border-radius:12px;display:grid;place-items:center;font-size:1.3rem;background:color-mix(in srgb,var(--c) 18%,transparent);flex:none}
+.t{flex:1;min-width:0}
+.t b{display:block;font-weight:800;overflow-wrap:anywhere}
+.t small{color:var(--muted);font-size:.82rem}
+.tag{font-size:.7rem;font-weight:800;border-radius:99px;padding:1px 8px;margin-inline-start:6px}
+.tag.l{background:#22c55e;color:#fff}.tag.w{background:#f59e0b;color:#fff}
+.ic{font:inherit;cursor:pointer;border-radius:10px;border:1px solid var(--line);background:transparent;color:var(--text);width:34px;height:34px;display:grid;place-items:center}
+.ic:hover{background:var(--line)}
+.empty{color:var(--muted);font-size:.92rem;padding:8px 2px;position:relative}
+.add{font:inherit;font-weight:800;cursor:pointer;border-radius:13px;border:1.5px dashed var(--c);background:transparent;color:var(--c);padding:10px;margin-top:auto;transition:.15s}
+.add:hover{background:var(--c);color:#fff}
+form{display:none;flex-direction:column;gap:8px;border-top:1px dashed var(--line);padding-top:10px;position:relative}
+form.open{display:flex}
+input[type=text],input[type=time]{font:inherit;padding:9px 11px;border-radius:11px;border:1px solid var(--line);background:var(--input);color:var(--text);width:100%}
+input:focus{outline:2px solid var(--c)}
+.row{display:flex;gap:8px;align-items:flex-end}
+.row label{flex:1;font-size:.8rem;color:var(--muted);display:flex;flex-direction:column;gap:3px}
+.cats{display:flex;gap:6px;flex-wrap:wrap}
+.cats label{cursor:pointer}
+.cats input{position:absolute;opacity:0;pointer-events:none}
+.cats span{display:grid;place-items:center;width:40px;height:40px;border-radius:12px;font-size:1.2rem;border:1.5px solid var(--line);background:var(--input);transition:.15s}
+.cats input:checked+span{border-color:var(--c);background:color-mix(in srgb,var(--c) 22%,transparent);transform:scale(1.08)}
+.btn{font:inherit;font-weight:800;cursor:pointer;border-radius:11px;border:1px solid var(--line);background:transparent;color:var(--text);padding:9px 14px}
+.btn.main{background:var(--c);color:#fff;border-color:var(--c);flex:1}
+.hint{text-align:center;color:var(--muted);font-size:.85rem;margin-top:24px}
+.bg{position:fixed;inset:0;z-index:-1;overflow:hidden;pointer-events:none}.bg i{position:absolute;border-radius:50%;filter:blur(80px);opacity:.38;animation:fl 20s ease-in-out infinite alternate}.bg i:nth-child(1){width:380px;height:380px;background:#6366f1;top:-100px;right:-80px}.bg i:nth-child(2){width:340px;height:340px;background:#ec4899;top:40%;left:-120px;animation-delay:-6s}.bg i:nth-child(3){width:420px;height:420px;background:#14b8a6;bottom:-160px;right:20%;animation-delay:-12s}@keyframes fl{to{transform:translate(50px,70px) scale(1.18)}}@media (prefers-reduced-motion:reduce){.bg i,.ev,.pulse{animation:none}}.reps{display:flex;gap:6px;flex-wrap:wrap}.pc{font:inherit;font-size:.8rem;cursor:pointer;padding:3px 10px;border-radius:99px;border:1.5px solid var(--line);background:var(--input);color:var(--text)}.pc:hover{border-color:var(--c)}.rp{position:relative}.rp input{position:absolute;opacity:0;pointer-events:none}.rp span{display:block;padding:3px 11px;border-radius:99px;border:1.5px solid var(--line);font-size:.8rem;cursor:pointer;background:var(--input)}.rp input:checked+span{background:var(--c);color:#fff;border-color:var(--c)}.tabs{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap}.tb{font:inherit;font-weight:800;cursor:pointer;padding:9px 18px;border-radius:99px;border:1px solid var(--line);background:var(--card);color:var(--text)}.tb.on{background:var(--accent);color:#fff;border-color:var(--accent)}#dates{display:none;--c:var(--accent)}#dates.show{display:block}.sec{margin:18px 4px 10px;font-size:1.05rem;font-weight:800}.dl{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}.dc{display:flex;gap:12px;align-items:center;border-radius:18px;padding:12px;animation:in .3s both}.dc.past{opacity:.55}.db{width:60px;flex:none;text-align:center;border-radius:14px;padding:7px 0;background:linear-gradient(160deg,#6366f1,#ec4899);color:#fff;line-height:1.15}.db b{display:block;font-size:1.5rem;font-weight:900}.db small{font-size:.72rem}.tag.n{background:var(--accent);color:#fff}.dc small .tag{margin:0 0 0 8px;white-space:nowrap;display:inline-block}.dform{border-radius:20px;padding:14px;margin-bottom:14px;display:flex;flex-direction:column;gap:8px}input[type=date]{font:inherit;padding:9px 11px;border-radius:11px;border:1px solid var(--line);background:var(--input);color:var(--text);width:100%}#cal{display:none;--c:var(--accent)}#cal.show{display:block}.calw{border-radius:22px;padding:14px}.calh{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:10px}.calh b{font-size:1.15rem;font-weight:900}.cg{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}.ch{text-align:center;font-size:.78rem;font-weight:700;color:var(--muted);padding:4px 0}.cd{font:inherit;font-weight:700;cursor:pointer;aspect-ratio:1;min-height:42px;padding:0;border-radius:12px;border:1px solid var(--line);background:var(--input);color:var(--text);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;transition:.15s}.cd:hover{border-color:var(--accent)}.cd.tdy{border-color:var(--accent);box-shadow:inset 0 0 0 1px var(--accent)}.cd.sel{background:linear-gradient(160deg,#6366f1,#ec4899);color:#fff;border-color:transparent}.dots{display:flex;gap:2px;height:6px}.dots i{width:5px;height:5px;border-radius:50%;background:#ec4899}.cd.sel .dots i{background:#fff}.cpanel{border-radius:22px;padding:14px;margin-top:14px;display:flex;flex-direction:column;gap:8px}.sub2{font-size:.85rem;font-weight:700;color:var(--muted);margin-top:6px}.cd{aspect-ratio:auto;min-height:92px;align-items:stretch;justify-content:flex-start;gap:3px;padding:5px;text-align:start}.dn{font-weight:800;font-size:.95rem}.ce{font-size:.7rem;font-weight:600;line-height:1.2;background:color-mix(in srgb,#ec4899 18%,transparent);border-radius:6px;padding:1px 5px;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;word-break:break-word;text-align:start}.ce.more{background:transparent;color:var(--muted);padding:0}.cd.sel .ce{background:rgba(255,255,255,.25)}.cd.sel .ce.more{color:#fff}.tw{display:inline-flex;align-items:center;gap:2px}.tbe{font:inherit;cursor:pointer;border:none;background:transparent;padding:4px;font-size:.85rem}.tbi{font:inherit;font-weight:800;padding:8px 14px;border-radius:99px;border:2px solid var(--accent);background:var(--input);color:var(--text);width:190px;max-width:100%}@media (max-width:520px){.cd{min-height:78px;padding:3px}.ce{font-size:.58rem;padding:1px 3px}.cg{gap:3px}}@media (max-width:520px){.hero{grid-template-columns:1fr}.clock,.clock small{text-align:right}}
+</style>
+</head>
+<body>
+<div class="bg"><i></i><i></i><i></i></div>
+<main>
+<section class="hero glass">
+<div><h1 id="greet"></h1><div style="color:var(--muted);font-weight:600" id="sub"></div></div>
+<div class="clock"><span id="time"></span><small id="date"></small></div>
+<div class="next" id="next"></div>
+<div class="bar"><i id="prog"></i></div>
+</section>
+<div class="tools"><div class="stats" id="stats"></div><button class="lock" id="theme" type="button" title="ليلي / نهاري">🌓</button><button class="lock" id="lock" type="button"></button></div>
+<div class="tabs"><button class="tb on" data-v="w" type="button">📅 الأسبوع</button><button class="tb" data-v="d" type="button">🗓️ تواريخ معينة</button><button class="tb" data-v="c" type="button">📆 كاليندر</button></div>
+<div class="grid" id="grid"></div>
+<section id="dates"></section>
+<section id="cal"></section>
+<p class="hint" id="hint"></p>
+</main>
+<script>
+const DAYS=["الحد","الاتنين","التلات","الأربع","الخميس","الجمعة","السبت"];
+const COLORS=["#6366f1","#0ea5e9","#8b5cf6","#ec4899","#f59e0b","#10b981","#ef4444"];
+const CATS=[["📌","عام"],["💼","شغل"],["📚","دراسة"],["🏋️","رياضة"],["🎉","خروجة"],["🍽️","أكل"],["🕌","صلاة"],["🤲","دعاء"]];
+let data={};
+try{data=JSON.parse(localStorage.getItem("schedule-v1")||"{}")||{}}catch(e){data={}}
+let openDay=null,editId=null,unlocked=false;
+function save(){try{localStorage.setItem("schedule-v1",JSON.stringify(data))}catch(e){}}
+const mins=t=>{const[h,m]=t.split(":").map(Number);return h*60+m};
+function fmt(t){const[h,m]=t.split(":").map(Number);return (h%12||12)+":"+String(m).padStart(2,"0")+" "+(h>=12?"م":"ص")}
+function dur(a,b){let d=mins(b)-mins(a);if(d<0)d+=1440;const h=Math.floor(d/60),m=d%60;return (h?h+" ساعة":"")+(h&&m?" و":"")+(m?m+" دقيقة":"")}
+function esc(s){return String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]))}
+function dayList(i){return (data[i]||[]).slice().sort((a,b)=>a.from.localeCompare(b.from))}
+function nowMin(){const n=new Date();return n.getHours()*60+n.getMinutes()}
+function isLive(e){const n=nowMin(),a=mins(e.from),b=mins(e.to);return b>a?(n>=a&&n<b):(n>=a||n<b)}
+function overlaps(list){const s=new Set();for(let i=0;i<list.length;i++)for(let j=i+1;j<list.length;j++){if(mins(list[j].from)<mins(list[i].to)&&mins(list[i].from)<mins(list[j].to)){s.add(list[i].id);s.add(list[j].id)}}return s}
+function render(){
+const now=new Date(),today=now.getDay();
+const lk=document.getElementById("lock");
+lk.className="lock"+(unlocked?" on":"");lk.innerHTML=unlocked?"🔓 التعديل مفتوح":"🔒 مقفول";
+document.getElementById("hint").textContent=unlocked?"دوس على القفل تاني عشان تقفل الإضافة والتعديل والحذف.":"دوس على القفل لو عايز تضيف أو تعدّل أو تحذف معاد.";
+let total=0,mn=0;
+for(let i=0;i<7;i++)dayList(i).forEach(e=>{total++;let d=mins(e.to)-mins(e.from);if(d<0)d+=1440;mn+=d});
+document.getElementById("stats").innerHTML='<span class="stat glass">📋 '+total+' معاد</span><span class="stat glass">⏱️ '+(Math.round(mn/6)/10)+' ساعة في الأسبوع</span>';
+const g=document.getElementById("grid");g.innerHTML="";
+DAYS.forEach((name,i)=>{
+const list=dayList(i),ov=overlaps(list);
+const d=document.createElement("section");d.className="day glass"+(i===today?" today":"");d.style.setProperty("--c",COLORS[i]);
+let h='<div class="dh"><h2>'+name+'</h2>'+(i===today?'<span>النهاردة</span>':'')+'</div>';
+if(!list.length)h+='<div class="empty">يوم فاضي 🌿</div>';
+list.forEach((e,k)=>{
+const live=i===today&&isLive(e),w=ov.has(e.id);
+h+='<div class="ev'+(live?" live":"")+(w?" warn":"")+'" style="animation-delay:'+k*50+'ms"><div class="cat">'+(e.cat||"📌")+'</div><div class="t"><b>'+esc(e.title)+(live?'<span class="tag l">دلوقتي</span>':'')+(w?'<span class="tag w">تعارض</span>':'')+'</b><small>'+fmt(e.from)+' ← '+fmt(e.to)+' · '+dur(e.from,e.to)+'</small>'+(e.note?'<small style="display:block">📝 '+esc(e.note)+'</small>':'')+'</div>'+(unlocked?'<button class="ic" data-a="edit" data-d="'+i+'" data-id="'+e.id+'" title="تعديل">✏️</button><button class="ic" data-a="del" data-d="'+i+'" data-id="'+e.id+'" title="حذف">🗑️</button>':'')+'</div>'});
+const isOpen=unlocked&&openDay===i;
+const cur=isOpen&&editId?(data[i]||[]).find(x=>x.id===editId):null;
+if(isOpen){
+h+='<form class="open" data-d="'+i+'"><input type="text" name="title" placeholder="عندي إيه؟" required value="'+(cur?esc(cur.title):"")+'">'+(cur?"":'<div class="reps">'+["الفجر","الضهر","العصر","المغرب","العشا"].map(p=>'<button type="button" class="pc" data-a="pray" data-v="صلاة '+p+'">🕌 '+p+'</button>').join("")+'</div>')+'<div class="cats">'+CATS.map(c=>'<label title="'+c[1]+'"><input type="radio" name="cat" value="'+c[0]+'"'+((cur?cur.cat||"📌":"📌")===c[0]?" checked":"")+'><span>'+c[0]+'</span></label>').join("")+'</div><div class="row"><label>من<input type="time" name="from" required value="'+(cur?cur.from:"")+'"></label><label>إلى<input type="time" name="to" required value="'+(cur?cur.to:"")+'"></label></div><input type="text" name="note" placeholder="ملاحظة (اختياري) 📝" value="'+(cur&&cur.note?esc(cur.note):"")+'">'+(cur?"":'<div style="font-size:.8rem;color:var(--muted)">كرّر كمان في:</div><div class="reps">'+DAYS.map((n,k)=>k==i?"":'<label class="rp"><input type="checkbox" name="rep" value="'+k+'"><span>'+n+'</span></label>').join("")+'</div>')+'<div class="row"><button class="btn main" type="submit">'+(cur?"حفظ التعديل":"حفظ")+'</button><button class="btn" type="button" data-a="cancel">إلغاء</button></div></form>'}
+else if(unlocked)h+='<button class="add" data-a="add" data-d="'+i+'">+ إضافة معاد</button>';
+d.innerHTML=h;g.appendChild(d)});
+tick()}
+function tick(){
+const now=new Date(),today=now.getDay(),n=nowMin(),hr=now.getHours();
+document.getElementById("greet").innerHTML=(hr<5?"سهران؟ 🌙":hr<12?"صباح الخير ☀️":hr<17?"نهارك سعيد 🌤️":hr<21?"مساء الخير 🌇":"مساء النور 🌙")+" <span>يا بطل</span>";
+document.getElementById("sub").textContent="النهاردة "+DAYS[today]+" · "+["ابدأ أسبوعك بنية حلوة 🌱","خطوة صغيرة كل يوم بتفرق ✨","نظّم وقتك تكسب يومك ⏳","الاستمرار أهم من الكمال 💪","ابدأ بدري توصل أحسن 🚀","الجمعة: صلاة وراحة وبركة 🤍","اشحن طاقتك لأسبوع جديد 🔋"][today];
+document.getElementById("time").textContent=fmt(String(hr).padStart(2,"0")+":"+String(now.getMinutes()).padStart(2,"0"));
+document.getElementById("date").textContent=now.toLocaleDateString("ar-EG",{day:"numeric",month:"long",year:"numeric"});
+const list=dayList(today),live=list.find(isLive),nxt=list.find(e=>mins(e.from)>n);
+const nb=document.getElementById("next");
+nb.innerHTML=live?'<span class="pulse"></span>دلوقتي: '+live.cat+" "+esc(live.title)+" (لحد "+fmt(live.to)+")":nxt?"⏭️ الجاي: "+(nxt.cat||"📌")+" "+esc(nxt.title)+" الساعة "+fmt(nxt.from):list.length?"✅ خلّصت مواعيد النهاردة":"🌿 مفيش مواعيد النهاردة، استمتع بيومك";
+if(live&&!live.cat)nb.innerHTML=nb.innerHTML.replace("undefined","📌");
+const done=list.length?list.filter(e=>mins(e.to)<=n&&!isLive(e)).length/list.length:0;
+document.getElementById("prog").style.width=Math.round(done*100)+"%"}
+document.getElementById("lock").addEventListener("click",()=>{unlocked=!unlocked;if(!unlocked){openDay=null;editId=null;dEdit=null}render();renderD();renderC();ren=null;renderTabs()});
+document.getElementById("grid").addEventListener("click",ev=>{
+const b=ev.target.closest("button");if(!b)return;
+const a=b.dataset.a,d=b.dataset.d,id=b.dataset.id;
+if(a==="add"){openDay=+d;editId=null;render();const f=document.querySelector("form.open input");if(f)f.focus()}
+else if(a==="edit"){openDay=+d;editId=id;render()}
+else if(a==="cancel"){openDay=null;editId=null;render()}
+else if(a==="pray"){const f=b.closest("form");f.title.value=b.dataset.v;f.cat.value="🕌";f.from.focus()}
+else if(a==="del"){if(confirm("متأكد إنك عايز تحذف المعاد ده؟")){data[d]=(data[d]||[]).filter(x=>x.id!==id);save();render()}}
+});
+document.getElementById("grid").addEventListener("submit",ev=>{
+ev.preventDefault();const f=ev.target,d=f.dataset.d;
+const item={id:editId||String(Date.now()),title:f.title.value.trim(),from:f.from.value,to:f.to.value,cat:f.cat.value,note:f.note.value.trim()};
+if(!item.title)return;
+data[d]=(data[d]||[]).filter(x=>x.id!==item.id);data[d].push(item);
+f.querySelectorAll('input[name=rep]:checked').forEach(c=>{const k=c.value;(data[k]=data[k]||[]).push({...item,id:item.id+"r"+k})});
+save();openDay=null;editId=null;render()});
+try{const t=localStorage.getItem("schedule-theme");if(t)document.documentElement.dataset.theme=t}catch(e){}
+document.getElementById("theme").addEventListener("click",()=>{const r=document.documentElement,dark=r.dataset.theme?r.dataset.theme==="dark":matchMedia("(prefers-color-scheme:dark)").matches,n=dark?"light":"dark";r.dataset.theme=n;try{localStorage.setItem("schedule-theme",n)}catch(e){}});
+let dates=[],view="w",dEdit=null;
+try{dates=JSON.parse(localStorage.getItem("schedule-dates-v1")||"[]")||[]}catch(e){dates=[]}
+function saveD(){try{localStorage.setItem("schedule-dates-v1",JSON.stringify(dates))}catch(e){}}
+function renderD(){
+const el=document.getElementById("dates");
+const td=new Date();td.setHours(0,0,0,0);
+const cur=dEdit?dates.find(x=>x.id===dEdit):null;
+let h="";
+if(unlocked)h+='<form class="dform glass" id="dform"><b>'+(cur?"✏️ تعديل المعاد":"➕ معاد جديد بتاريخ")+'</b><input type="date" name="ddate" required value="'+(cur?cur.date:"")+'"><input type="text" name="dtitle" placeholder="عندي إيه؟" required value="'+(cur?esc(cur.title):"")+'"><div class="cats">'+CATS.map(c=>'<label title="'+c[1]+'"><input type="radio" name="dcat" value="'+c[0]+'"'+(((cur&&cur.cat)||"📌")===c[0]?" checked":"")+'><span>'+c[0]+'</span></label>').join("")+'</div><div class="row"><label>من (اختياري)<input type="time" name="dfrom" value="'+((cur&&cur.from)||"")+'"></label><label>إلى (اختياري)<input type="time" name="dto" value="'+((cur&&cur.to)||"")+'"></label></div><input type="text" name="dnote" placeholder="ملاحظة (اختياري) 📝" value="'+(cur&&cur.note?esc(cur.note):"")+'"><div class="row"><button class="btn main" type="submit">'+(cur?"حفظ التعديل":"حفظ")+'</button>'+(cur?'<button class="btn" type="button" data-a="dcancel">إلغاء</button>':"")+'</div></form>';
+const items=dates.map(x=>({...x,diff:Math.round((new Date(x.date+"T00:00:00")-td)/864e5)})).sort((a,b)=>a.diff-b.diff||(a.from||"").localeCompare(b.from||""));
+const up=items.filter(x=>x.diff>=0),past=items.filter(x=>x.diff<0).reverse();
+const card=x=>{const dd=new Date(x.date+"T00:00:00");
+const lab=x.diff===0?"النهاردة":x.diff===1?"بكرة":x.diff===2?"بعد يومين":x.diff>2?"بعد "+x.diff+(x.diff<=10?" أيام":" يوم"):x.diff===-1?"إمبارح":"من "+(-x.diff)+(-x.diff<=10&&-x.diff>2?" أيام":" يوم");
+return '<div class="dc glass'+(x.diff<0?" past":"")+'"><div class="db"><b>'+dd.getDate()+'</b><small>'+dd.toLocaleDateString("ar-EG",{month:"long"})+'</small></div><div class="t"><b>'+(x.cat||"📌")+" "+esc(x.title)+'</b><small><span class="tag '+(x.diff===0?"l":"n")+'">'+lab+'</span>'+dd.toLocaleDateString("ar-EG",{weekday:"long"})+(x.from?" · "+fmt(x.from)+(x.to?" ← "+fmt(x.to):""):" · طول اليوم")+'</small>'+(x.note?'<small style="display:block">📝 '+esc(x.note)+'</small>':'')+'</div>'+(unlocked?'<button class="ic" data-a="dedit" data-id="'+x.id+'" title="تعديل">✏️</button><button class="ic" data-a="ddel" data-id="'+x.id+'" title="حذف">🗑️</button>':'')+'</div>'};
+if(!items.length)h+='<div class="empty">'+(unlocked?"ضيف أول معاد من الفورم اللي فوق 👆":"مفيش مواعيد بتواريخ لسه. دوس 🔒 وضيف أول معاد.")+'</div>';
+if(up.length)h+='<h3 class="sec">⏭️ الجاي</h3><div class="dl">'+up.map(card).join("")+'</div>';
+if(past.length)h+='<h3 class="sec">⌛ عدّت</h3><div class="dl">'+past.map(card).join("")+'</div>';
+el.innerHTML=h}
+document.getElementById("dates").addEventListener("click",ev=>{const b=ev.target.closest("button");if(!b)return;const a=b.dataset.a,id=b.dataset.id;
+if(a==="dedit"){dEdit=id;renderD();document.getElementById("dform").scrollIntoView({behavior:"smooth",block:"center"})}
+else if(a==="dcancel"){dEdit=null;renderD()}
+else if(a==="ddel"){if(confirm("متأكد إنك عايز تحذف المعاد ده؟")){dates=dates.filter(x=>x.id!==id);saveD();renderD()}}});
+document.getElementById("dates").addEventListener("submit",ev=>{ev.preventDefault();const f=ev.target;
+const item={id:dEdit||"d"+Date.now(),date:f.ddate.value,title:f.dtitle.value.trim(),from:f.dfrom.value,to:f.dto.value,cat:f.dcat.value,note:f.dnote.value.trim()};
+if(!item.title||!item.date)return;
+dates=dates.filter(x=>x.id!==item.id);dates.push(item);saveD();dEdit=null;renderD()});
+document.querySelector(".tabs").addEventListener("click",ev=>{const b=ev.target.closest(".tb");if(!b)return;view=b.dataset.v;document.querySelectorAll(".tb").forEach(x=>x.classList.toggle("on",x===b));document.getElementById("grid").style.display=view==="w"?"":"none";document.getElementById("dates").classList.toggle("show",view==="d");document.getElementById("cal").classList.toggle("show",view==="c");if(view==="c")renderC()});
+let cm=new Date(),csel=null;cm=new Date(cm.getFullYear(),cm.getMonth(),1);
+const pad=v=>String(v).padStart(2,"0");
+function renderC(){
+const el=document.getElementById("cal");
+const y=cm.getFullYear(),m=cm.getMonth(),first=new Date(y,m,1).getDay(),n=new Date(y,m+1,0).getDate(),t0=new Date(),tk=t0.getFullYear()+"-"+pad(t0.getMonth()+1)+"-"+pad(t0.getDate());
+let h='<div class="calw glass"><div class="calh"><button class="btn" data-a="cprev" type="button">→ السابق</button><b>'+cm.toLocaleDateString("ar-EG",{month:"long",year:"numeric"})+'</b><button class="btn" data-a="cnext" type="button">التالي ←</button></div><div class="cg">';
+["حد","اتنين","تلات","أربع","خميس","جمعة","سبت"].forEach(x=>{h+='<div class="ch">'+x+'</div>'});
+for(let i=0;i<first;i++)h+='<div></div>';
+for(let d=1;d<=n;d++){const key=y+"-"+pad(m+1)+"-"+pad(d),ce=dates.filter(x=>x.date===key).sort((a,b)=>(a.from||"").localeCompare(b.from||""));
+h+='<button type="button" class="cd'+(key===tk?" tdy":"")+(key===csel?" sel":"")+'" data-a="cpick" data-date="'+key+'"><span class="dn">'+d+'</span>'+ce.slice(0,2).map(x=>'<span class="ce">'+(x.cat||"📌")+" "+esc(x.title)+'</span>').join("")+(ce.length>2?'<span class="ce more">+'+(ce.length-2)+' كمان</span>':"")+'</button>'}
+h+='</div></div>';
+if(csel){const dd=new Date(csel+"T00:00:00"),evs=dates.filter(x=>x.date===csel).sort((a,b)=>(a.from||"").localeCompare(b.from||"")),wk=dayList(dd.getDay());
+h+='<div class="cpanel glass"><h3 class="sec" style="margin:0">'+dd.toLocaleDateString("ar-EG",{weekday:"long",day:"numeric",month:"long",year:"numeric"})+'</h3>';
+if(!evs.length&&!wk.length)h+='<div class="empty">يوم فاضي 🌿</div>';
+evs.forEach(x=>{h+='<div class="ev"><div class="cat">'+(x.cat||"📌")+'</div><div class="t"><b>'+esc(x.title)+'</b><small>'+(x.from?fmt(x.from)+(x.to?" ← "+fmt(x.to):""):"طول اليوم")+'</small>'+(x.note?'<small style="display:block">📝 '+esc(x.note)+'</small>':'')+'</div>'+(unlocked?'<button class="ic" data-a="cdel" data-id="'+x.id+'" title="حذف">🗑️</button>':'')+'</div>'});
+if(wk.length){h+='<div class="sub2">🔁 مواعيد الأسبوع الثابتة ('+DAYS[dd.getDay()]+')</div>';wk.forEach(e=>{h+='<div class="ev"><div class="cat">'+(e.cat||"📌")+'</div><div class="t"><b>'+esc(e.title)+'</b><small>'+fmt(e.from)+' ← '+fmt(e.to)+'</small></div></div>'})}
+if(unlocked)h+='<form class="dform" id="cform" style="margin:8px 0 0;padding:0"><b>➕ ضيف في اليوم ده</b><input type="text" name="ctitle" placeholder="عندي إيه؟" required><div class="cats">'+CATS.map((c,i)=>'<label title="'+c[1]+'"><input type="radio" name="ccat" value="'+c[0]+'"'+(i===0?" checked":"")+'><span>'+c[0]+'</span></label>').join("")+'</div><div class="row"><label>من (اختياري)<input type="time" name="cfrom"></label><label>إلى (اختياري)<input type="time" name="cto"></label></div><input type="text" name="cnote" placeholder="ملاحظة (اختياري) 📝"><button class="btn main" type="submit">حفظ</button></form>';
+h+='</div>'}
+else h+='<div class="empty" style="margin-top:12px;text-align:center">دوس على أي يوم عشان تشوف أو تضيف 👆</div>';
+el.innerHTML=h}
+document.getElementById("cal").addEventListener("click",ev=>{const b=ev.target.closest("button");if(!b)return;const a=b.dataset.a;
+if(a==="cprev")cm=new Date(cm.getFullYear(),cm.getMonth()-1,1);
+else if(a==="cnext")cm=new Date(cm.getFullYear(),cm.getMonth()+1,1);
+else if(a==="cpick")csel=b.dataset.date;
+else if(a==="cdel"){if(!confirm("متأكد إنك عايز تحذف المعاد ده؟"))return;dates=dates.filter(x=>x.id!==b.dataset.id);saveD();renderD()}
+renderC()});
+document.getElementById("cal").addEventListener("submit",ev=>{ev.preventDefault();const f=ev.target;if(!csel||!f.ctitle.value.trim())return;
+dates.push({id:"d"+Date.now(),date:csel,title:f.ctitle.value.trim(),from:f.cfrom.value,to:f.cto.value,cat:f.ccat.value,note:f.cnote.value.trim()});saveD();renderD();renderC()});
+let ren=null,tnames=["📅 الأسبوع","🗓️ تواريخ معينة","📆 كاليندر"];
+try{const s=JSON.parse(localStorage.getItem("schedule-tabs")||"null");if(Array.isArray(s)&&s.length===3)tnames=s.map((x,i)=>x||tnames[i])}catch(e){}
+function renderTabs(){document.querySelector(".tabs").innerHTML=["w","d","c"].map((v,i)=>ren===i?'<input class="tbi" data-i="'+i+'" value="'+esc(tnames[i])+'" maxlength="24">':'<span class="tw"><button class="tb'+(view===v?" on":"")+'" data-v="'+v+'" type="button">'+esc(tnames[i])+'</button>'+(unlocked?'<button class="tbe" data-a="ren" data-i="'+i+'" type="button" title="غيّر الاسم">✏️</button>':'')+'</span>').join("");const inp=document.querySelector(".tbi");if(inp){inp.focus();inp.select()}}
+function commitRen(inp){if(ren===null)return;const i=+inp.dataset.i,v=inp.value.trim();if(v)tnames[i]=v;ren=null;try{localStorage.setItem("schedule-tabs",JSON.stringify(tnames))}catch(e){}renderTabs()}
+document.querySelector(".tabs").addEventListener("click",ev=>{const b=ev.target.closest('[data-a="ren"]');if(b){ren=+b.dataset.i;renderTabs()}});
+document.querySelector(".tabs").addEventListener("keydown",ev=>{if(!ev.target.classList.contains("tbi"))return;if(ev.key==="Enter")commitRen(ev.target);else if(ev.key==="Escape"){ren=null;renderTabs()}});
+document.querySelector(".tabs").addEventListener("focusout",ev=>{if(ev.target.classList.contains("tbi"))commitRen(ev.target)});
+render();renderD();renderC();renderTabs();setInterval(()=>{const a=document.activeElement;if(!(a&&a.closest&&a.closest("form")))render();else tick()},30000);
+</script>
+</body>
+</html>
